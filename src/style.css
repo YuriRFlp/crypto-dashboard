@@ -1,15 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
+html.dark, :root {
+  --el-switch-on-color: #61ADFF !important;
+  --el-switch-off-color: #233053 !important;
+}
+
+html, :root {
+  --el-switch-on-color: #61ADFF !important;
+  --el-switch-off-color: #233053 !important;
+  --background-dark: #091223;
+  --background-light: #F9FAFB;
+  --text-light: #1F2937;
+  --text-dark: #e0e7ff;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--background-dark);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -63,7 +73,8 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
+  width: 90vw;
+  max-width: 1880px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -79,5 +90,101 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.text-success {
+  color: #4ade80;
+}
+.text-error {
+  color: #f87171;
+}
+
+.el-switch__core {
+  background-color: #233053 !important;
+}
+.el-switch.is-checked .el-switch__core {
+  background-color: #61ADFF !important;
+}
+
+.custom-bg-dark {
+  background-color: var(--background-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+.el-input__wrapper {
+  background-color: #15233c !important;
+  color: var(--text-dark) !important;
+  box-shadow: none !important;
+  padding: 10px  15px!important;
+}
+.el-input__wrapper .el-input__inner {
+  color: var(--text-dark) !important;
+  font-size: 1rem !important;
+}
+
+.el-table, .el-table .el-table__inner-wrapper {
+  background-color: #15233c !important;
+  color: var(--text-dark) !important;
+}
+.el-pagination button, .el-pagination ul li  {
+  margin: 0 3px !important;
+  background-color: #15233c !important;
+  color: var(--text-dark) !important;
+}
+
+.el-talbe, .el-table .el-table__inner-wrapper {
+  overflow-x: auto !important;
+}
+.el-table .el-table__inner-wrapper .el-table__header-wrapper {
+  background-color: #15233c !important;
+  color: var(--text-dark) !important;
+}
+.el-table th.el-table__cell {
+  background-color: #15233c !important;
+  color: var(--text-dark) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  padding-top: 10px;
+}
+.el-table__inner-wrapper:before,
+.el-table__inner-wrapper:after,
+.el-table--border:after,
+.el-table__border-left-patch,
+.el-table--border .el-table__cell {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: var(--background-dark) !important;
+}
+
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell,
+.el-table tr, .el-table tr:hover {
+  background-color: var(--background-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+@media (max-width: 800px) {
+  #app {
+    width: 100vw;
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 1.7em;
+  }
+  .card {
+    padding: 1em;
   }
 }
