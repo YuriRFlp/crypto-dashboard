@@ -6,16 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tests": "vitest run"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "apexcharts": "^5.3.5",
     "axios": "^1.12.2",
     "element-plus": "^2.11.3",
     "pinia": "^3.0.3",
     "tailwindcss": "^4.1.13",
     "vue": "^3.5.21",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue3-apexcharts": "^1.8.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
