@@ -176,6 +176,13 @@ button:focus-visible {
   color: var(--text-dark) !important;
 }
 
+.favoriteBtn:focus,
+.favoriteBtn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 @media (max-width: 800px) {
   #app {
     width: 100vw;

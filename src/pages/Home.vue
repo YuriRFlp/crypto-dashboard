@@ -1,16 +1,23 @@
 
 <template>
 	<DefaultLayout>
-		<div class="flex flex-col gap-6">
-			<SearchBar v-model="search" />
+		<div v-if="paginatedCoins" class="flex flex-col gap-6">
+			<SearchBar v-model="search" class="mt-8" />
 			<CoinTable
 				:coins="paginatedCoins"
 				:columns="columns"
 				:page-size="pagination.pageSize"
 				:current-page="pagination.currentPage"
 				:total="pagination.total"
+				:isFavorite="coinStore.isFavorite"
 				@update:currentPage="pagination.currentPage = $event"
+				@view-details="handleViewDetails"
+				@toggle-favorite="handleToggleFavorite"
 			/>
+		</div>
+		<div v-else class="flex items-center justify-center text-center text-text-light mt-16">
+			<ElIcon class="mr-2 animate-spin" size="36"><Loading /></ElIcon>
+    	<span>Loading...</span>
 		</div>
 	</DefaultLayout>
 </template>
@@ -21,7 +28,11 @@ import DefaultLayout from '../layouts/DefaultLayout.vue';
 import SearchBar from '../components/SearchBar.vue';
 import CoinTable from '../components/CoinTable.vue';
 import { useCoinStore } from '../store/coinStore';
-import type { Column } from '../interfaces';
+import type { Coin, Column } from '../interfaces';
+import router from '../router';
+import { ElIcon } from 'element-plus';
+import { Loading } from '@element-plus/icons-vue';
+import { ElNotification } from 'element-plus'
 
 const coinStore = useCoinStore();
 const search = ref<string>('');
@@ -32,7 +43,6 @@ const columns = ref<Column[]>([
   { key: 'change', label: '24h', minWidth: '100', slot: 'change' },
   { key: 'marketCap', label: 'Market Cap', minWidth: '140', slot: 'marketCap' },
 ]);
-
 const pagination = ref({
 	pageSize: 10,
 	currentPage: 1,
@@ -40,8 +50,10 @@ const pagination = ref({
 		return filteredCoins.value.length;
 	}
 });
+const filterTrigger = ref(0);
 
 const paginatedCoins = computed(() => {
+	filterTrigger.value;
   const start = (pagination.value.currentPage - 1) * pagination.value.pageSize;
   return filteredCoins.value.slice(start, start + pagination.value.pageSize);
 });
@@ -56,6 +68,40 @@ const filteredCoins = computed(() => {
 	}
 	return filtered;
 });
+
+const handleToggleFavorite = (coin: Coin) => {
+	coinStore.toggleFavorite(coin.id);
+	filterTrigger.value++;
+	const isFav = coinStore.isFavorite(coin.id);
+	ElNotification({
+		title: isFav ? 'Adicionado aos Favoritos' : 'Removido dos Favoritos',
+		message: isFav ? `${coin.name} foi adicionado aos seus favoritos.` : `${coin.name} foi removido dos seus favoritos.`,
+		type: 'success',
+	});
+};
+
+const handleViewDetails = async (coin: any) => {
+	try {
+		await coinStore.fetchCoinDetails(coin.id);
+
+		if (coinStore.selectedCoin && coinStore.selectedCoin.code === "ERR_NETWORK") {
+			ElNotification({
+				title: 'Erro',
+				message: 'Erro ao buscar os detalhes da moeda.',
+				type: 'error',
+			});
+			return;
+		}
+
+		router.push({ name: 'CoinDetails', params: { id: coin.id } });
+	} catch (error) {
+		ElNotification({
+			title: 'Error',
+			message: 'Erro ao buscar os detalhes da moeda.',
+			type: 'error',
+		});
+	}
+};
 
 onMounted(async () => {
   await coinStore.fetchCoins();

@@ -2,8 +2,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 import Home from '../pages/Home.vue';
-// import Details from '../pages/Details.vue';
-// import Favorites from '../pages/Favorites.vue';
+import Details from '../pages/Details.vue';
+import Favorites from '../pages/Favorites.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -11,17 +11,17 @@ const routes: RouteRecordRaw[] = [
 		name: 'Home',
 		component: Home,
 	},
-	// {
-	// 	path: '/coin/:id',
-	// 	name: 'CoinDetails',
-	// 	component: Details,
-	// 	props: true,
-	// },
-	// {
-	// 	path: '/favorites',
-	// 	name: 'Favorites',
-	// 	component: Favorites,
-	// },
+	{
+		path: '/coin/:id',
+		name: 'CoinDetails',
+		component: Details,
+		props: true,
+	},
+	{
+		path: '/favorites',
+		name: 'Favorites',
+		component: Favorites,
+	},
 ];
 
 const router = createRouter({
