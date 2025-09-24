@@ -51,9 +51,15 @@
             {{ coin.market_cap_change_percentage_24h >= 0 ? '+' : '' }}{{ (coin.market_cap_change_percentage_24h || 0).toFixed(2) }}%
           </div>
         </div>
-        <div>
+        <div v-if="coin.roi">
           <div class="text-xs text-text-light mb-1">ROI</div>
-          <div class="text-2xl font-semibold">{{ coin.roi ? coin.roi.toLocaleString('pt-br') : '-' }}</div>
+          <div :class="coin.roi.percentage >= 0 ? 'text-success' : 'text-error'" class="text-2xl font-semibold">
+            {{ coin.roi.percentage >= 0 ? '+' : '' }}{{ (coin.roi.percentage || 0).toFixed(2) }}%
+          </div>
+        </div>
+        <div v-else>
+          <div class="text-xs text-text-light mb-1">ROI</div>
+          <div class="text-2xl font-semibold">-</div>
         </div>
         <div>
           <div class="text-xs text-text-light mb-1">Volume total</div>

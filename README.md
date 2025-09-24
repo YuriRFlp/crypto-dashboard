@@ -50,12 +50,17 @@ npm run preview
 
 ## Testing
 
-### Run all tests (unit + E2E)
+### Run unit tests
 ```sh
-npm run tests
+npm run test
 ```
-This runs both unit tests (Vitest, @testing-library/vue) and E2E tests (Playwright).
-Unit tests are in `tests/unit/`, E2E tests are in `tests/e2e/`. (Add test suites to those files to enable.)
+This runs unit tests (Vitest, @testing-library/vue). Unit tests are in `tests/unit/`.
+
+### Run E2E tests
+```sh
+npm run test:e2e
+```
+This runs E2E tests (Playwright). E2E tests are in `tests/e2e/`.
 
 ## API & Data
 - Uses CoinGecko public API for coin data and historical prices
