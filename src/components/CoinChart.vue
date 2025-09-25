@@ -19,7 +19,6 @@
   });
 
   const series = computed(() => {
-    console.log(props.data)
     return [
       {
         name: "Preço (R$)",
