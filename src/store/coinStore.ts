@@ -38,17 +38,19 @@ export const useCoinStore = defineStore('coin', {
     },
     toggleFavorite(coinId: string) {
       let favoriteCoins = localStorage.getItem('favoriteCoins');
+      let parsedFavorites = [];
       if (favoriteCoins) {
-        const parsedFavorites = JSON.parse(favoriteCoins);
-        if (Array.isArray(parsedFavorites) && parsedFavorites.includes(coinId)) {
-          const updatedFavorites = parsedFavorites.filter((id: string) => id !== coinId);
-          localStorage.setItem('favoriteCoins', JSON.stringify(updatedFavorites));
-          return;
-        }
-
-        const updatedFavorites = Array.isArray(parsedFavorites) ? [...parsedFavorites, coinId] : [coinId];
-        localStorage.setItem('favoriteCoins', JSON.stringify(updatedFavorites));
+        parsedFavorites = JSON.parse(favoriteCoins);
       }
+
+      if (Array.isArray(parsedFavorites) && parsedFavorites.includes(coinId)) {
+        const updatedFavorites = parsedFavorites.filter((id: string) => id !== coinId);
+        localStorage.setItem('favoriteCoins', JSON.stringify(updatedFavorites));
+        return;
+      }
+
+      const updatedFavorites = Array.isArray(parsedFavorites) ? [...parsedFavorites, coinId] : [coinId];
+      localStorage.setItem('favoriteCoins', JSON.stringify(updatedFavorites));
     },
     getFavoriteCoins() {
       const favoriteCoins = localStorage.getItem('favoriteCoins');
